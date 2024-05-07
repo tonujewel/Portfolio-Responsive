@@ -19,9 +19,34 @@ class HomeScreen extends StatelessWidget {
             HomeAppbar(size: size),
             const SizedBox(height: 60),
             Container(
+              padding: const EdgeInsets.all(20),
               height: size.height * .4,
               width: size.width * .4,
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20)),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    height: size.height * .25,
+                    width: size.height * .25,
+                    decoration: const BoxDecoration(color: Colors.blue),
+                  ),
+                  const Column(
+                    children: [
+                      Text(
+                        "A App Developer",
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
+                      Text("Jewel\nRana"),
+                      Text("I am a App Developer Based in Dhaka "),
+                    ],
+                  )
+                ],
+              ),
             )
           ],
         ),
