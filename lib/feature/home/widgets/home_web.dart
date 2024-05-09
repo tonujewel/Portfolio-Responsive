@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:marquee/marquee.dart';
 
 import '../../../core/utils/app_constant.dart';
@@ -15,15 +16,76 @@ class HomeWeb extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Padding(
       padding: EdgeInsets.symmetric(horizontal: size.width * .06),
+      child: Column(
+        children: [
+          SizedBox(height: size.height * .06),
+          HomeAppbar(size: size),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: size.height * .04),
+                  HomeFirstSection(size: size),
+                  const VerticalMargin(),
+                  HomeSecondSection(size: size),
+                  const VerticalMargin(),
+                  HomeThirdSection(size: size),
+                  HomeBottomSection(size: size),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class HomeBottomSection extends StatelessWidget {
+  const HomeBottomSection({
+    super.key,
+    required this.size,
+  });
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
       children: [
-        SizedBox(height: size.height * .04),
-        HomeAppbar(size: size),
-        SizedBox(height: size.height * .04),
-        HomeFirstSection(size: size),
-        HomeSecondSection(size: size),
-        HomeThirdSection(size: size)
+        SizedBox(height: size.height * .1),
+        SvgPicture.asset("assets/svg/logo.svg", height: size.width * .04),
+        const VerticalMargin(),
+        const VerticalMargin(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text("HOME", style: TextStyle(fontWeight: FontWeight.bold)),
+            AppbarSpacing(size: size),
+            const Text("ABOUT", style: TextStyle(fontWeight: FontWeight.bold)),
+            AppbarSpacing(size: size),
+            const Text("WORKS", style: TextStyle(fontWeight: FontWeight.bold)),
+            AppbarSpacing(size: size),
+            const Text("CONTACT", style: TextStyle(fontWeight: FontWeight.bold)),
+            AppbarSpacing(size: size),
+          ],
+        ),
+        const VerticalMargin(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text("@All rights reserved by "),
+            Text("Jewel Rana",
+                style: TextStyle(
+                  color: ColorManager.primaryBlue,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                )),
+          ],
+        ),
+        SizedBox(height: size.height * .1)
       ],
     );
   }
@@ -45,48 +107,54 @@ class HomeFirstSection extends StatelessWidget {
         children: [
           Expanded(
             child: PrimaryContainer(
-              padding: const EdgeInsets.all(20),
-              child: Row(
+              onTap: () => context.go(AppConstant.about),
+              child: Stack(
                 children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30),
-                    ),
-                    child: Container(
-                      height: size.width * .2,
-                      width: size.width * .2,
-                      decoration: BoxDecoration(
-                        color: Colors.blue.withOpacity(.2),
-                      ),
-                      child: Image.asset("assets/images/photo.png"),
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Flutter Developer".toUpperCase(),
-                          style: TextStyle(color: Colors.grey, fontSize: size.width * .01),
+                  Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          bottomRight: Radius.circular(30),
                         ),
-                        Text(
-                          "Jewel\nRana",
-                          style:
-                              TextStyle(color: ColorManager.blackTextColor, fontSize: 40, fontWeight: FontWeight.bold),
-                        ),
-                        const Expanded(
-                          child: Text(
-                            "I am a Mobile Application Developer (Flutter, Android, iOS)",
-                            style: TextStyle(
-                              color: Colors.grey,
-                            ),
+                        child: Container(
+                          height: size.width * .2,
+                          width: size.width * .2,
+                          decoration: BoxDecoration(
+                            color: Colors.blue.withOpacity(.2),
                           ),
+                          child: Image.asset("assets/images/photo.png"),
                         ),
-                      ],
-                    ),
-                  )
+                      ),
+                      const SizedBox(width: 20),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Flutter Developer".toUpperCase(),
+                              style: TextStyle(color: Colors.grey, fontSize: size.width * .01),
+                            ),
+                            Text(
+                              "Jewel\nRana",
+                              style: TextStyle(
+                                  color: ColorManager.blackTextColor, fontSize: 40, fontWeight: FontWeight.bold),
+                            ),
+                            const Flexible(
+                              child: Text(
+                                "I am a Mobile Application Developer based in Dhaka",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  Positioned(bottom: 0, right: 0, child: SvgPicture.asset("assets/svg/color_star.svg")),
                 ],
               ),
             ).animate().slideX(duration: AppConstant.animationDelay),
@@ -112,19 +180,24 @@ class HomeFirstSection extends StatelessWidget {
                       children: [
                         Expanded(
                           child: PrimaryContainer(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            child: Stack(
                               children: [
-                                Center(
-                                  child: Image.asset(
-                                    "assets/images/signature.png",
-                                    color: ColorManager.greyTextColor,
-                                    height: size.width * .07,
-                                  ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Center(
+                                      child: Image.asset(
+                                        "assets/images/signature.png",
+                                        color: ColorManager.greyTextColor,
+                                        height: size.width * .07,
+                                      ),
+                                    ),
+                                    const VerticalMargin(),
+                                    const TitleBottomHome(title: "More about me", subTitle: "Credentials"),
+                                  ],
                                 ),
-                                const VerticalMargin(),
-                                const TitleBottomHome(title: "More about me", subTitle: "Credentials"),
+                                Positioned(bottom: 0, right: 0, child: SvgPicture.asset("assets/svg/color_star.svg")),
                               ],
                             ),
                           ),
@@ -132,18 +205,23 @@ class HomeFirstSection extends StatelessWidget {
                         const HorizontalMargin(),
                         Expanded(
                           child: PrimaryContainer(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            child: Stack(
                               children: [
-                                Center(
-                                  child: Image.asset(
-                                    "assets/images/projects.png",
-                                    height: size.width * .07,
-                                  ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Center(
+                                      child: Image.asset(
+                                        "assets/images/projects.png",
+                                        height: size.width * .07,
+                                      ),
+                                    ),
+                                    const VerticalMargin(),
+                                    const TitleBottomHome(title: "Showcase", subTitle: "Projects"),
+                                  ],
                                 ),
-                                const VerticalMargin(),
-                                const TitleBottomHome(title: "Showcase", subTitle: "Projects"),
+                                Positioned(bottom: 0, right: 0, child: SvgPicture.asset("assets/svg/color_star.svg")),
                               ],
                             ),
                           ),
@@ -178,11 +256,15 @@ class TitleBottomHome extends StatelessWidget {
       children: [
         Text(
           title.toUpperCase(),
-          style: const TextStyle(color: Colors.grey, fontSize: 18),
+          style: const TextStyle(color: Colors.grey),
         ),
         Text(
           subTitle,
-          style: TextStyle(color: ColorManager.blackTextColor, fontSize: 18, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: ColorManager.blackTextColor,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ],
     );
@@ -201,127 +283,146 @@ class HomeSecondSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: size.height * .38,
-      child: Expanded(
-        child: Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: PrimaryContainer(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: Image.asset(
-                        "assets/demo/google.png",
-                        height: size.width * .1,
-                      ),
-                    ),
-                    const VerticalMargin(),
-                    const TitleBottomHome(title: "Blog", subTitle: "Latest")
-                  ],
-                ),
-              ).animate().slideX(duration: AppConstant.animationDelay),
-            ),
-            const HorizontalMargin(),
-            Expanded(
-              flex: 4,
-              child: PrimaryContainer(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Image.asset(
-                            "assets/images/mobile.png",
-                            height: size.width * .03,
-                          ),
-                          Image.asset(
-                            "assets/images/mobile.png",
-                            height: size.width * .03,
-                          ),
-                          Image.asset(
-                            "assets/images/mobile.png",
-                            height: size.width * .03,
-                          ),
-                          Image.asset(
-                            "assets/images/mobile.png",
-                            height: size.width * .03,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Column(
-                      children: [
-                        VerticalMargin(),
-                        TitleBottomHome(title: "SPECIALIZATION", subTitle: "Services Offering"),
-                      ],
-                    )
-                  ],
-                ),
-              ).animate().slideX(duration: AppConstant.animationDelay),
-            ),
-            const HorizontalMargin(),
-            Expanded(
-              flex: 2,
-              child: PrimaryContainer(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFBFBFC),
-                          borderRadius: BorderRadius.circular(30),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: PrimaryContainer(
+              child: Stack(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Center(
+                        child: Image.asset(
+                          "assets/demo/google.png",
+                          height: size.width * .1,
                         ),
+                      ),
+                      // const VerticalMargin(),
+                      const TitleBottomHome(title: "Latest", subTitle: "Tutorial")
+                    ],
+                  ),
+                  Positioned(bottom: 0, right: 0, child: SvgPicture.asset("assets/svg/color_star.svg")),
+                ],
+              ),
+            ).animate().slideX(duration: AppConstant.animationDelay),
+          ),
+          const HorizontalMargin(),
+          const HorizontalMargin(),
+          Expanded(
+            flex: 4,
+            child: PrimaryContainer(
+              child: Stack(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Container(
-                              padding: const EdgeInsets.all(20),
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white,
-                              ),
-                              child: Image.asset(
-                                "assets/images/mobile.png",
-                                height: size.width * .03,
-                              ),
+                            Image.asset(
+                              "assets/images/mobile.png",
+                              height: size.width * .03,
+                              color: ColorManager.primaryBlue,
                             ),
-                            const HorizontalMargin(),
-                            Container(
-                              padding: const EdgeInsets.all(16),
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white,
-                              ),
-                              child: Image.asset(
-                                "assets/images/mobile.png",
-                                height: size.width * .03,
-                              ),
+                            Image.asset(
+                              "assets/images/mobile.png",
+                              height: size.width * .03,
+                              color: ColorManager.primaryBlue,
+                            ),
+                            Image.asset(
+                              "assets/images/mobile.png",
+                              height: size.width * .03,
+                              color: ColorManager.primaryBlue,
+                            ),
+                            Image.asset(
+                              "assets/images/mobile.png",
+                              height: size.width * .03,
+                              color: ColorManager.primaryBlue,
                             ),
                           ],
                         ),
                       ),
-                    ),
-                    const Column(
-                      children: [
-                        VerticalMargin(),
-                        TitleBottomHome(title: "STAY WITH ME", subTitle: "Profiles"),
-                      ],
-                    )
-                  ],
-                ),
-              ).animate().slideX(duration: AppConstant.animationDelay),
-            ),
-          ],
-        ),
+                      const Column(
+                        children: [
+                          VerticalMargin(),
+                          TitleBottomHome(title: "SPECIALIZATION", subTitle: "Services Offering"),
+                        ],
+                      )
+                    ],
+                  ),
+                  Positioned(bottom: 0, right: 0, child: SvgPicture.asset("assets/svg/color_star.svg")),
+                ],
+              ),
+            ).animate().slideY(duration: AppConstant.animationDelay),
+          ),
+          const HorizontalMargin(),
+          const HorizontalMargin(),
+          Expanded(
+            flex: 2,
+            child: PrimaryContainer(
+              child: Stack(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFBFBFC),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                ),
+                                child: Image.asset(
+                                  "assets/images/mobile.png",
+                                  color: ColorManager.primaryBlue,
+                                  height: size.width * .03,
+                                ),
+                              ),
+                              const HorizontalMargin(),
+                              Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                ),
+                                child: Image.asset(
+                                  "assets/images/mobile.png",
+                                  color: ColorManager.primaryBlue,
+                                  height: size.width * .03,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const Column(
+                        children: [
+                          VerticalMargin(),
+                          TitleBottomHome(title: "STAY WITH ME", subTitle: "Profiles"),
+                        ],
+                      )
+                    ],
+                  ),
+                  Positioned(bottom: 0, right: 0, child: SvgPicture.asset("assets/svg/color_star.svg")),
+                ],
+              ),
+            ).animate().slideX(duration: AppConstant.animationDelay),
+          ),
+        ],
       ),
     );
   }
@@ -338,129 +439,140 @@ class HomeThirdSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: size.height * .3,
-      child: Expanded(
-        child: Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: PrimaryContainer(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFFBFBFC),
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    "07",
-                                    style: TextStyle(fontSize: 30),
-                                  ),
-                                  Text(
-                                    "Years Experience",
-                                    style: TextStyle(fontSize: 14, color: ColorManager.greyTextColor),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const HorizontalMargin(),
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFFBFBFC),
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    "+125",
-                                    style: TextStyle(fontSize: 30),
-                                  ),
-                                  Text(
-                                    "CLIENTS WorLd WIDE",
-                                    style: TextStyle(fontSize: 14, color: ColorManager.greyTextColor),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const HorizontalMargin(),
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFFBFBFC),
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    "15+",
-                                    style: TextStyle(fontSize: 30),
-                                  ),
-                                  Text(
-                                    "Total Project",
-                                    style: TextStyle(fontSize: 14, color: ColorManager.greyTextColor),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ).animate().slideX(duration: AppConstant.animationDelay),
-            ),
-            const HorizontalMargin(),
-            Expanded(
-              flex: 2,
-              child: PrimaryContainer(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Image.asset(
-                      "assets/images/staricon.png",
-                      height: size.width * .03,
-                    ),
-                    const VerticalMargin(),
-                    const Text(
-                      "Let's",
-                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
-                    ),
-                    const Row(
+      height: size.height * .35,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: PrimaryContainer(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Row(
                       children: [
-                        Text(
-                          "work",
-                          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
+                        Expanded(
+                          child: HomeCounterWidget(
+                            size: size,
+                            title: '06',
+                            subTitle: 'Years',
+                            subSub: "Experience",
+                          ),
                         ),
-                        HorizontalMargin(),
-                        Text(
-                          "together",
-                          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
+                        const HorizontalMargin(),
+                        Expanded(
+                          child: HomeCounterWidget(
+                            size: size,
+                            title: '+10',
+                            subTitle: 'CLIENTS',
+                            subSub: "WORLD WIDE",
+                          ),
+                        ),
+                        const HorizontalMargin(),
+                        Expanded(
+                          child: HomeCounterWidget(
+                            size: size,
+                            title: '+15',
+                            subTitle: 'Total',
+                            subSub: "Project",
+                          ),
                         ),
                       ],
-                    )
-                  ],
-                ),
-              ).animate().slideX(duration: AppConstant.animationDelay),
+                    ),
+                  ),
+                ],
+              ),
+            ).animate().slideX(duration: AppConstant.animationDelay),
+          ),
+          const HorizontalMargin(),
+          Expanded(
+            flex: 2,
+            child: PrimaryContainer(
+              child: Stack(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Image.asset(
+                        "assets/images/staricon.png",
+                        height: size.width * .03,
+                      ),
+                      const Spacer(),
+                      const Text(
+                        "Let's",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 36,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            "work",
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 36),
+                          ),
+                          const HorizontalMargin(),
+                          Text(
+                            "together",
+                            style:
+                                TextStyle(fontWeight: FontWeight.bold, fontSize: 36, color: ColorManager.primaryBlue),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  Positioned(bottom: 0, right: 0, child: SvgPicture.asset("assets/svg/color_star.svg")),
+                ],
+              ),
+            ).animate().slideY(duration: AppConstant.animationDelay),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class HomeCounterWidget extends StatelessWidget {
+  const HomeCounterWidget({
+    super.key,
+    required this.size,
+    required this.title,
+    required this.subTitle,
+    required this.subSub,
+  });
+
+  final Size size;
+  final String title, subTitle, subSub;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFFFBFBFC),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: size.width * .032,
+              color: ColorManager.primaryBlue,
+              fontWeight: FontWeight.bold,
             ),
-          ],
-        ),
+          ),
+          Text(
+            subTitle.toUpperCase(),
+            style: TextStyle(fontSize: 16, color: ColorManager.greyTextColor),
+          ),
+          Text(
+            subSub.toUpperCase(),
+            style: TextStyle(fontSize: 16, color: ColorManager.greyTextColor),
+          ),
+        ],
       ),
     );
   }
@@ -478,7 +590,10 @@ class HomeAppbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SvgPicture.asset("assets/svg/logo-dark.svg"),
+        SvgPicture.asset(
+          "assets/svg/logo.svg",
+          height: size.width * .04,
+        ),
         const Spacer(),
         const HomeAppbarItem(titile: "Home"),
         AppbarSpacing(size: size),

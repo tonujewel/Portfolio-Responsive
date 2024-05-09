@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:resume/feature/home/screen/home_screen.dart';
+
+import 'core/utils/app_router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,7 +11,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      scrollBehavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -18,7 +20,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: "Poppins",
       ),
-      home: const HomeScreen(),
+      routerConfig: router,
+
+      // home: const HomeScreen(),
     );
   }
 }

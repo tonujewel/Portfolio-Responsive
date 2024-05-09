@@ -38,6 +38,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
   marquee: ^2.2.3
   flutter_animate: ^4.5.0
+  go_router: ^14.0.2
 
 dev_dependencies:
   flutter_test:
