@@ -73,10 +73,10 @@ class HomeBottomSection extends StatelessWidget {
           ],
         ),
         const VerticalMargin(),
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("@All rights reserved by "),
+            Text("@All rights reserved by "),
             Text("Jewel Rana",
                 style: TextStyle(
                   color: ColorManager.primaryBlue,
@@ -120,8 +120,8 @@ class HomeFirstSection extends StatelessWidget {
                         child: Container(
                           height: size.width * .2,
                           width: size.width * .2,
-                          decoration: BoxDecoration(
-                            color: Colors.blue.withOpacity(.2),
+                          decoration: const BoxDecoration(
+                            color: Color(0xFFFBFBFC),
                           ),
                           child: Image.asset("assets/images/photo.png"),
                         ),
@@ -136,7 +136,7 @@ class HomeFirstSection extends StatelessWidget {
                               "Flutter Developer".toUpperCase(),
                               style: TextStyle(color: Colors.grey, fontSize: size.width * .01),
                             ),
-                            Text(
+                            const Text(
                               "Jewel\nRana",
                               style: TextStyle(
                                   color: ColorManager.blackTextColor, fontSize: 40, fontWeight: FontWeight.bold),
@@ -190,7 +190,7 @@ class HomeFirstSection extends StatelessWidget {
                                       child: Image.asset(
                                         "assets/images/signature.png",
                                         color: ColorManager.greyTextColor,
-                                        height: size.width * .07,
+                                        height: size.width * .06,
                                       ),
                                     ),
                                     const VerticalMargin(),
@@ -214,7 +214,7 @@ class HomeFirstSection extends StatelessWidget {
                                     Center(
                                       child: Image.asset(
                                         "assets/images/projects.png",
-                                        height: size.width * .07,
+                                        height: size.width * .06,
                                       ),
                                     ),
                                     const VerticalMargin(),
@@ -260,9 +260,9 @@ class TitleBottomHome extends StatelessWidget {
         ),
         Text(
           subTitle,
-          style: TextStyle(
+          style: const TextStyle(
             color: ColorManager.blackTextColor,
-            fontSize: 20,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -507,13 +507,13 @@ class HomeThirdSection extends StatelessWidget {
                           fontSize: 36,
                         ),
                       ),
-                      Row(
+                      const Row(
                         children: [
-                          const Text(
+                          Text(
                             "work",
                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 36),
                           ),
-                          const HorizontalMargin(),
+                          HorizontalMargin(),
                           Text(
                             "together",
                             style:
@@ -566,11 +566,11 @@ class HomeCounterWidget extends StatelessWidget {
           ),
           Text(
             subTitle.toUpperCase(),
-            style: TextStyle(fontSize: 16, color: ColorManager.greyTextColor),
+            style: const TextStyle(fontSize: 16, color: ColorManager.greyTextColor),
           ),
           Text(
             subSub.toUpperCase(),
-            style: TextStyle(fontSize: 16, color: ColorManager.greyTextColor),
+            style: const TextStyle(fontSize: 16, color: ColorManager.greyTextColor),
           ),
         ],
       ),
